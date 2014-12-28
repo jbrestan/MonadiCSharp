@@ -1,4 +1,4 @@
-MonadiCSharp
+MonadiC#
 ============
 
-Reducing boilerplate and adding composability to your everyday code.
+Reducing boilerplate and adding composability to your everyday C# code.
