@@ -13,5 +13,10 @@ namespace MonadiCSharp.MaybeImplementation
         {
             return new Nothing<TResult>();
         }
+
+        public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise)
+        {
+            return Ensure.NotNull(() => otherwise).Invoke();
+        }
     }
 }

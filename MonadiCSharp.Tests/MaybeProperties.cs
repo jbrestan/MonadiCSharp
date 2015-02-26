@@ -67,6 +67,19 @@ namespace MonadiCSharp.Tests
             Assert.IsType<Nothing<object>>(o.ToMaybe());
         }
 
+        [Property]
+        public bool JustShouldBeMatchedByOnValue(NonNull<object> o)
+        {
+            return o.Item.ToMaybe().Match(wrapped => wrapped == o.Item, () => false);
+        }
+
+        [Fact]
+        public void NothingShouldBeMatchedByOtherwise()
+        {
+            object o = null;
+            Assert.True(o.ToMaybe().Match(_ => false, () => true));
+        }
+
         private class JustArbitrary : Arbitrary<IMaybe<object>>
         {
             public static Arbitrary<IMaybe<object>> Maybe()

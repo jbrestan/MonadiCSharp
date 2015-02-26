@@ -17,7 +17,12 @@ namespace MonadiCSharp.MaybeImplementation
 
         public IMaybe<TResult> Bind<TResult>(Func<TValue, IMaybe<TResult>> f)
         {
-            return f(value);
+            return Ensure.NotNull(() => f).Invoke(value);
+        }
+
+        public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise)
+        {
+            return Ensure.NotNull(() => onValue).Invoke(value);
         }
     }
 }
