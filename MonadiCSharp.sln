@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadiCSharp", "MonadiCSharp\MonadiCSharp.csproj", "{03726DD3-B415-4952-A0D2-12DDDA26069F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadiCSharp.Tests", "MonadiCSharp.Tests\MonadiCSharp.Tests.csproj", "{7C2DA70A-7474-4D8D-9860-91716A37946B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03726DD3-B415-4952-A0D2-12DDDA26069F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03726DD3-B415-4952-A0D2-12DDDA26069F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03726DD3-B415-4952-A0D2-12DDDA26069F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03726DD3-B415-4952-A0D2-12DDDA26069F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2DA70A-7474-4D8D-9860-91716A37946B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2DA70A-7474-4D8D-9860-91716A37946B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2DA70A-7474-4D8D-9860-91716A37946B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2DA70A-7474-4D8D-9860-91716A37946B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
