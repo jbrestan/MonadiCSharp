@@ -79,6 +79,25 @@ namespace MonadiCSharp.Tests
             object o = null;
             Assert.True(o.ToMaybe().Match(_ => false, () => true));
         }
+        
+        [Fact]
+        public void NothingIsEqualToNothing()
+        {
+            Assert.True(Maybe.Nothing<object>().Equals(Maybe.Nothing<object>()));
+        }
+
+        [Property]
+        public bool JustIsEqualToJustIfTheirValuesAreEqual(NonNull<object> o)
+        {
+            return o.Item.ToMaybe().Equals(o.Item.ToMaybe());
+        }
+
+        [Property(Arbitrary = new[] { typeof(MaybeArbitrary) })]
+        public bool UnwrapJustShouldReturnInnerMaybe(NonNull<IMaybe<object>> innerMaybe)
+        {
+            var doubleMaybe = innerMaybe.Item.ToMaybe();
+            return doubleMaybe.Unwrap().Equals(innerMaybe.Item);
+        }
 
         private class JustArbitrary : Arbitrary<IMaybe<object>>
         {
@@ -89,11 +108,30 @@ namespace MonadiCSharp.Tests
 
             public override Gen<IMaybe<object>> Generator
             {
-	            get
-                { 
+	            get { return Just(); }
+            }
+        }
+
+        private static Gen<IMaybe<object>> Just()
+        {
+            return from o in Any.OfType<object>()
+                   where o != null
+                   select new Just<object>(o) as IMaybe<object>;
+        }
+
+        private class MaybeArbitrary : Arbitrary<IMaybe<object>>
+        {
+            public static Arbitrary<IMaybe<object>> Maybe()
+            {
+                return new JustArbitrary();
+            }
+
+            public override Gen<IMaybe<object>> Generator
+            {
+                get
+                {
                     return from o in Any.OfType<object>()
-                           where o != null
-                           select new Just<object>(o) as IMaybe<object>;
+                           select o.ToMaybe();
                 }
             }
         }
