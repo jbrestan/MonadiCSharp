@@ -39,6 +39,7 @@
     <Compile Include="Ensure.cs" />
     <Compile Include="IMaybe.cs" />
     <Compile Include="Maybe.cs" />
+    <Compile Include="MaybeExtensions.cs" />
     <Compile Include="MaybeImplementation\Just.cs" />
     <Compile Include="MaybeImplementation\Nothing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

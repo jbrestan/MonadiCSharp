@@ -54,6 +54,19 @@ namespace MonadiCSharp.Tests
             Assert.IsType<Nothing<object>>(nothing.Bind(f));
         }
 
+        [Property]
+        public bool ToMaybeReturnsJustWhenSuppliedWithNotNull(NonNull<object> o)
+        {
+            return o.Item.ToMaybe() is Just<object>;
+        }
+
+        [Fact]
+        public void ToMaybeReturnsNothingWhenSuppliedWithNull()
+        {
+            object o = null;
+            Assert.IsType<Nothing<object>>(o.ToMaybe());
+        }
+
         private class JustArbitrary : Arbitrary<IMaybe<object>>
         {
             public static Arbitrary<IMaybe<object>> Maybe()
