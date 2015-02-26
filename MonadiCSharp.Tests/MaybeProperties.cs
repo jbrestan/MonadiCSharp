@@ -92,6 +92,12 @@ namespace MonadiCSharp.Tests
             return o.Item.ToMaybe().Equals(o.Item.ToMaybe());
         }
 
+        [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
+        public bool JustIsNotEqualToNothing(NonNull<IMaybe<object>> just)
+        {
+            return !just.Item.Equals(Maybe.Nothing<object>());
+        }
+
         [Property(Arbitrary = new[] { typeof(MaybeArbitrary) })]
         public bool UnwrapJustShouldReturnInnerMaybe(NonNull<IMaybe<object>> innerMaybe)
         {

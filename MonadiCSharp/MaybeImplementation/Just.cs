@@ -24,5 +24,10 @@ namespace MonadiCSharp.MaybeImplementation
         {
             return Ensure.NotNull(() => onValue).Invoke(value);
         }
+
+        public bool Equals(IMaybe<TValue> other)
+        {
+            return other is Just<TValue> && value.Equals((other as Just<object>).value);
+        }
     }
 }
