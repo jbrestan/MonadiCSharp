@@ -98,11 +98,18 @@ namespace MonadiCSharp.Tests
             return !just.Item.Equals(Maybe.Nothing<object>());
         }
 
-        [Property(Arbitrary = new[] { typeof(MaybeArbitrary) })]
+        [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
         public bool UnwrapJustShouldReturnInnerMaybe(NonNull<IMaybe<object>> innerMaybe)
         {
             var doubleMaybe = innerMaybe.Item.ToMaybe();
             return doubleMaybe.Unwrap().Equals(innerMaybe.Item);
+        }
+
+        [Fact]
+        public bool UnwrapNothingShouldReturnNothing()
+        {
+            var doubleMaybe = Maybe.Nothing<IMaybe<object>>();
+            return doubleMaybe.Unwrap().Equals(Maybe.Nothing<object>());
         }
 
         private class JustArbitrary : Arbitrary<IMaybe<object>>
@@ -129,7 +136,7 @@ namespace MonadiCSharp.Tests
         {
             public static Arbitrary<IMaybe<object>> Maybe()
             {
-                return new JustArbitrary();
+                return new MaybeArbitrary();
             }
 
             public override Gen<IMaybe<object>> Generator
