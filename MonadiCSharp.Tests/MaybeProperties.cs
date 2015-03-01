@@ -108,10 +108,40 @@ namespace MonadiCSharp.Tests
         }
 
         [Fact]
-        public bool UnwrapNothingShouldReturnNothing()
+        public void UnwrapNothingShouldReturnNothing()
         {
             var doubleMaybe = Maybe.Nothing<IMaybe<object>>();
-            return doubleMaybe.Unwrap().Equals(Maybe.Nothing<object>());
+            Assert.Equal(doubleMaybe.Unwrap(), Maybe.Nothing<object>());
+        }
+
+        [Fact]
+        public void NothingIsEqualToNothingAsObject()
+        {
+            Assert.True(Maybe.Nothing<object>().Equals(Maybe.Nothing<object>() as object));
+        }
+
+        [Property]
+        public bool JustIsEqualToJustAsObjectIfTheirValuesAreEqual(NonNull<object> o)
+        {
+            return o.Item.ToMaybe().Equals(o.Item.ToMaybe() as object);
+        }
+
+        [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
+        public bool JustIsNotEqualToNothingAsObject(NonNull<IMaybe<object>> just)
+        {
+            return !just.Item.Equals(Maybe.Nothing<object>() as object);
+        }
+
+        [Fact]
+        public void NothingGetHashCodeReturnsZero()
+        {
+            Assert.Equal(0, Maybe.Nothing<int>().GetHashCode());
+        }
+
+        [Property]
+        public bool JustGetHashCodeReturnsTheValueGetHashCode(NonNull<object> o)
+        {
+            return o.Item.GetHashCode() == o.Item.ToMaybe().GetHashCode();
         }
     }
 }

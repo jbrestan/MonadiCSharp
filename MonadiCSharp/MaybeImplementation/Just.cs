@@ -2,7 +2,7 @@
 
 namespace MonadiCSharp.MaybeImplementation
 {
-    internal class Just<TValue> : IMaybe<TValue>
+    internal sealed class Just<TValue> : IMaybe<TValue>, IEquatable<Just<TValue>>
     {
         private readonly TValue value;
 
@@ -21,10 +21,26 @@ namespace MonadiCSharp.MaybeImplementation
             return Ensure.NotNull(() => onValue).Invoke(value);
         }
 
+        #region Equality members and IEquatable implementation...
+        public bool Equals(Just<TValue> other)
+        {
+            return other != null && value.Equals(other.value);
+        }
+
         public bool Equals(IMaybe<TValue> other)
         {
-            var asJust = other as Just<TValue>;
-            return asJust != null && value.Equals(asJust.value);
+            return Equals(other as Just<TValue>);
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Just<TValue>);
+        }
+
+        public override int GetHashCode()
+        {
+            return value.GetHashCode();
+        }
+        #endregion
     }
 }
