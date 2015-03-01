@@ -1,7 +1,15 @@
-﻿namespace MonadiCSharp
+﻿using System;
+
+namespace MonadiCSharp
 {
     public static class MaybeExtensions
     {
+        public static IMaybe<TResult> Bind<TValue, TResult>(this IMaybe<TValue> maybe, Func<TValue, IMaybe<TResult>> f)
+        {
+            return Ensure.NotNull(() => maybe)
+                .Match(f, Maybe.Nothing<TResult>);
+        }
+
         public static IMaybe<TValue> ToMaybe<TValue>(this TValue value)
         {
             return value != null
