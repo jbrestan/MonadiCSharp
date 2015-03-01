@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using FsCheck;
 using FsCheck.Xunit;
 using Xunit;
 using MonadiCSharp.MaybeImplementation;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MonadiCSharp.Tests
 {
@@ -142,6 +145,24 @@ namespace MonadiCSharp.Tests
         public bool JustGetHashCodeReturnsTheValueGetHashCode(NonNull<object> o)
         {
             return o.Item.GetHashCode() == o.Item.ToMaybe().GetHashCode();
+        }
+
+        [Fact]
+        public void MaybeImplementsIEnumerable()
+        {
+            Assert.IsAssignableFrom<IEnumerable<object>>(Maybe.Nothing<object>());
+        }
+
+        [Fact]
+        public void NothingBehavesLikeEmptyCollection()
+        {
+            Assert.Equal(Enumerable.Empty<object>(), Maybe.Nothing<object>());
+        }
+
+        [Property]
+        public bool JustBehavesLikeSingletonCollectionOfItsValue(NonNull<object> o)
+        {
+            return o.Item.ToMaybe().Single() == o.Item;
         }
     }
 }

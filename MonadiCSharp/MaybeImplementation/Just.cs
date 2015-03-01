@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace MonadiCSharp.MaybeImplementation
 {
@@ -35,6 +37,18 @@ namespace MonadiCSharp.MaybeImplementation
         public override int GetHashCode()
         {
             return value.GetHashCode();
+        }
+        #endregion
+
+        #region IEnumerable implementation...
+        public IEnumerator<TValue> GetEnumerator()
+        {
+            yield return value;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
         #endregion
     }
