@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonadiCSharp.MaybeImplementation
 {
@@ -27,7 +23,8 @@ namespace MonadiCSharp.MaybeImplementation
 
         public bool Equals(IMaybe<TValue> other)
         {
-            return other is Just<TValue> && value.Equals((other as Just<object>).value);
+            var asJust = other as Just<TValue>;
+            return asJust != null && value.Equals(asJust.value);
         }
     }
 }

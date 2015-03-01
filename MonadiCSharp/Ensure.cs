@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonadiCSharp
 {
@@ -21,13 +16,13 @@ namespace MonadiCSharp
         {
             var possibleNull = parameterExpression.Compile().Invoke();
 
-            if (possibleNull == null)
+            if (possibleNull != null) 
             {
-                var paramName = GetVariableName(parameterExpression);
-                throw new ArgumentNullException(paramName);
+                return possibleNull;
             }
 
-            return possibleNull; // Totally not null now, tho.
+            var paramName = GetVariableName(parameterExpression);
+            throw new ArgumentNullException(paramName);
         }
 
         private static string GetVariableName<TValue>(Expression<Func<TValue>> parameterExpression)

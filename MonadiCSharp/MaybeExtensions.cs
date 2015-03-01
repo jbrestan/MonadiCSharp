@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MonadiCSharp
+﻿namespace MonadiCSharp
 {
     public static class MaybeExtensions
     {
@@ -19,7 +13,7 @@ namespace MonadiCSharp
         {
             return Ensure.NotNull(() => doubleMaybe)
                 .Match(innerMaybe => innerMaybe,
-                    () => Maybe.Nothing<TValue>());
+                       Maybe.Nothing<TValue>);
         }
     }
 }

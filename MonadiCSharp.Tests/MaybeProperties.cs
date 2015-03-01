@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using FsCheck;
-using FsCheck.Fluent;
 using FsCheck.Xunit;
 using Xunit;
 using MonadiCSharp.MaybeImplementation;
@@ -61,6 +61,7 @@ namespace MonadiCSharp.Tests
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "ExpressionIsAlwaysNull")]
         public void ToMaybeReturnsNothingWhenSuppliedWithNull()
         {
             object o = null;
@@ -74,6 +75,7 @@ namespace MonadiCSharp.Tests
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "ExpressionIsAlwaysNull")]
         public void NothingShouldBeMatchedByOtherwise()
         {
             object o = null;
@@ -110,43 +112,6 @@ namespace MonadiCSharp.Tests
         {
             var doubleMaybe = Maybe.Nothing<IMaybe<object>>();
             return doubleMaybe.Unwrap().Equals(Maybe.Nothing<object>());
-        }
-
-        private class JustArbitrary : Arbitrary<IMaybe<object>>
-        {
-            public static Arbitrary<IMaybe<object>> Maybe()
-            {
-                return new JustArbitrary();
-            }
-
-            public override Gen<IMaybe<object>> Generator
-            {
-	            get { return Just(); }
-            }
-        }
-
-        private static Gen<IMaybe<object>> Just()
-        {
-            return from o in Any.OfType<object>()
-                   where o != null
-                   select new Just<object>(o) as IMaybe<object>;
-        }
-
-        private class MaybeArbitrary : Arbitrary<IMaybe<object>>
-        {
-            public static Arbitrary<IMaybe<object>> Maybe()
-            {
-                return new MaybeArbitrary();
-            }
-
-            public override Gen<IMaybe<object>> Generator
-            {
-                get
-                {
-                    return from o in Any.OfType<object>()
-                           select o.ToMaybe();
-                }
-            }
         }
     }
 }
