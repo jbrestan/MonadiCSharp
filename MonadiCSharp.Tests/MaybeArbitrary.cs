@@ -3,11 +3,11 @@ using FsCheck.Fluent;
 
 namespace MonadiCSharp.Tests
 {
-    internal class JustArbitrary : Arbitrary<IMaybe<object>>
+    internal class MaybeArbitrary : Arbitrary<IMaybe<object>>
     {
         public static Arbitrary<IMaybe<object>> Maybe()
         {
-            return new JustArbitrary();
+            return new MaybeArbitrary();
         }
 
         public override Gen<IMaybe<object>> Generator
@@ -15,8 +15,7 @@ namespace MonadiCSharp.Tests
             get
             {
                 return from o in Any.OfType<object>()
-                    where o != null
-                    select o.ToMaybe();
+                       select o.ToMaybe();
             }
         }
     }

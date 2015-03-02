@@ -56,7 +56,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="JustArbitrary.cs" />
+    <Compile Include="MaybeArbitrary.cs" />
     <Compile Include="MaybeExtensionsProperties.cs" />
+    <Compile Include="MaybeMonadLaws.cs" />
     <Compile Include="MaybeProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
