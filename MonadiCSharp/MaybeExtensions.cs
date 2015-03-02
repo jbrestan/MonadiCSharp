@@ -23,5 +23,16 @@ namespace MonadiCSharp
                 .Match(innerMaybe => innerMaybe,
                        Maybe.Nothing<TValue>);
         }
+
+        public static TValue GetValueOrDefault<TValue>(this IMaybe<TValue> maybe)
+        {
+            return maybe.GetValueOrDefault(default(TValue));
+        }
+
+        public static TValue GetValueOrDefault<TValue>(this IMaybe<TValue> maybe, TValue defaultValue)
+        {
+            return Ensure.NotNull(() => maybe)
+                .Match(value => value, () => defaultValue);
+        }
     }
 }

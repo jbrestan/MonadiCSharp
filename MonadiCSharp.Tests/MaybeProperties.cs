@@ -164,5 +164,30 @@ namespace MonadiCSharp.Tests
         {
             return o.Item.ToMaybe().Single() == o.Item;
         }
+
+        [Property]
+        public bool JustGetValueOrDefaultReturnsTheValue(NonNull<object> o)
+        {
+            return o.Item.ToMaybe().GetValueOrDefault() == o.Item;
+        }
+
+        [Fact]
+        public void NothingGetValueOrDefaultReturnsDefaultTypeValue()
+        {
+            Assert.Equal(null, Maybe.Nothing<object>().GetValueOrDefault());
+        }
+
+        [Property]
+        public bool JustGetValueOrDefaultWithSuppliedValueReturnsJustTheValue(NonNull<object> o)
+        {
+            return o.Item.ToMaybe().GetValueOrDefault(new object()) == o.Item;
+        }
+
+        [Fact]
+        public void NothingGetValueOrDefaultWithSuppliedValueReturnsTheSuppliedValue()
+        {
+            var expected = new object();
+            Assert.Equal(expected, Maybe.Nothing<object>().GetValueOrDefault(expected));
+        }
     }
 }
