@@ -57,10 +57,10 @@ namespace MonadiCSharp.Tests
         }
 
         [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
-        public bool UnwrapJustShouldReturnInnerMaybe(NonNull<IMaybe<object>> innerMaybe)
+        public bool UnwrapJustShouldReturnInnerMaybe(IMaybe<object> innerMaybe)
         {
-            var doubleMaybe = innerMaybe.Item.ToMaybe();
-            return doubleMaybe.Unwrap().Equals(innerMaybe.Item);
+            var doubleMaybe = innerMaybe.ToMaybe();
+            return doubleMaybe.Unwrap().Equals(innerMaybe);
         }
 
         [Fact]

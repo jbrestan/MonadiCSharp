@@ -19,9 +19,9 @@ namespace MonadiCSharp.Tests
         }
 
         [Property(Arbitrary = new[] { typeof(MaybeArbitrary) })]
-        public bool Associativity(NonNull<IMaybe<object>> m, Func<object, IMaybe<object>> f, Func<object, IMaybe<object>> g)
+        public bool Associativity(IMaybe<object> m, Func<object, IMaybe<object>> f, Func<object, IMaybe<object>> g)
         {
-            return m.Item.Bind(f).Bind(g).Equals(m.Item.Bind(v => f(v).Bind(g)));
+            return m.Bind(f).Bind(g).Equals(m.Bind(v => f(v).Bind(g)));
         }
     }
 }

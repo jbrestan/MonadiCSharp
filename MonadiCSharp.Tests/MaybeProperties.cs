@@ -56,9 +56,9 @@ namespace MonadiCSharp.Tests
         }
 
         [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
-        public bool JustIsNotEqualToNothing(NonNull<IMaybe<object>> just)
+        public bool JustIsNotEqualToNothing(IMaybe<object> just)
         {
-            return !just.Item.Equals(Maybe.Nothing<object>());
+            return !just.Equals(Maybe.Nothing<object>());
         }
 
         [Fact]
@@ -74,9 +74,9 @@ namespace MonadiCSharp.Tests
         }
 
         [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
-        public bool JustIsNotEqualToNothingAsObject(NonNull<IMaybe<object>> just)
+        public bool JustIsNotEqualToNothingAsObject(IMaybe<object> just)
         {
-            return !just.Item.Equals(Maybe.Nothing<object>() as object);
+            return !just.Equals(Maybe.Nothing<object>() as object);
         }
 
         [Fact]
