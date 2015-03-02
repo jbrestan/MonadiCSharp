@@ -6,6 +6,10 @@ namespace MonadiCSharp.MaybeImplementation
 {
     internal sealed class Nothing<TValue> : IMaybe<TValue>, IEquatable<Nothing<TValue>>
     {
+        internal static readonly Nothing<TValue> Value = new Nothing<TValue>();
+
+        private Nothing() { }
+
         public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise)
         {
             return Ensure.NotNull(() => otherwise).Invoke();
@@ -19,12 +23,12 @@ namespace MonadiCSharp.MaybeImplementation
 
         public bool Equals(IMaybe<TValue> other)
         {
-            return Equals(other as Nothing<TValue>);
+            return ReferenceEquals(this, other);
         }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Nothing<TValue>);
+            return ReferenceEquals(this, obj);
         }
 
         public override int GetHashCode()

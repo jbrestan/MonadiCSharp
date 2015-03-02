@@ -91,7 +91,6 @@ namespace MonadiCSharp.Tests
             return o.Item.GetHashCode() == o.Item.ToMaybe().GetHashCode();
         }
 
-
         [Fact]
         public void MaybeImplementsIEnumerable()
         {

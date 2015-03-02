@@ -11,7 +11,7 @@ namespace MonadiCSharp
 
         public static IMaybe<TValue> Nothing<TValue>()
         {
-            return new Nothing<TValue>();
+            return MaybeImplementation.Nothing<TValue>.Value;
         }
     }
 }
