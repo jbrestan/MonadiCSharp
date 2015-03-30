@@ -42,6 +42,7 @@
     <Compile Include="MaybeExtensions.cs" />
     <Compile Include="MaybeImplementation\Just.cs" />
     <Compile Include="MaybeImplementation\Nothing.cs" />
+    <Compile Include="MaybeLinqExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
