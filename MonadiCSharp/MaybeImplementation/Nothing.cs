@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace MonadiCSharp.MaybeImplementation
 {
+    using static Ensure;
+
     internal sealed class Nothing<TValue> : IMaybe<TValue>, IEquatable<Nothing<TValue>>
     {
         internal static Nothing<TValue> Value { get; } = new Nothing<TValue>();
@@ -11,7 +13,7 @@ namespace MonadiCSharp.MaybeImplementation
         private Nothing() { }
 
         public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise) =>
-            Ensure.NotNull(() => otherwise).Invoke();
+            NotNull(() => otherwise).Invoke();
 
         #region Equality members and IEquatable implementation...
         public bool Equals(Nothing<TValue> other) => true;
@@ -31,5 +33,6 @@ namespace MonadiCSharp.MaybeImplementation
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
+        public override string ToString() => "Nothing";
     }
 }

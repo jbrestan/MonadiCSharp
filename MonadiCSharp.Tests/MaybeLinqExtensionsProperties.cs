@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Globalization;
 using FsCheck.Xunit;
 using Xunit;
 
 namespace MonadiCSharp.Tests
 {
+    using static Assert;
+    using static Maybe;
+
     public class MaybeLinqExtensionsProperties
     {
         [Fact]
@@ -13,7 +15,7 @@ namespace MonadiCSharp.Tests
             var result = from i in 1.ToMaybe()
                          select i;
 
-            Assert.IsAssignableFrom<IMaybe<int>>(result);
+            IsAssignableFrom<IMaybe<int>>(result);
         }
 
         [Property(Arbitrary = new[] { typeof(MaybeArbitrary) })]
@@ -22,7 +24,7 @@ namespace MonadiCSharp.Tests
             var actual = from val in o.ToMaybe()
                          select f(val);
 
-            var expected = o != null ? f(o).ToMaybe() : Maybe.Nothing<object>();
+            var expected = o != null ? f(o).ToMaybe() : Nothing<object>();
 
             return actual.Equals(expected);
         }
@@ -30,7 +32,7 @@ namespace MonadiCSharp.Tests
         [Fact]
         public void SelectShouldThrowWhenSelectorIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() =>
+            Throws<ArgumentNullException>(() =>
             {
                 5.ToMaybe().Select<int, int>(null);
             });
@@ -43,7 +45,7 @@ namespace MonadiCSharp.Tests
                          where i > 3
                          select i;
 
-            Assert.IsAssignableFrom<IMaybe<int>>(result);
+            IsAssignableFrom<IMaybe<int>>(result);
         }
 
         [Property]
@@ -54,7 +56,7 @@ namespace MonadiCSharp.Tests
                          where predicate(val)
                          select val;
 
-            var expected = predicateResult ? i.ToMaybe() : Maybe.Nothing<int>();
+            var expected = predicateResult ? i.ToMaybe() : Nothing<int>();
 
             return actual.Equals(expected);
         }
@@ -62,7 +64,7 @@ namespace MonadiCSharp.Tests
         [Fact]
         public void WhereShouldThrowWhenPredicateIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() =>
+            Throws<ArgumentNullException>(() =>
             {
                 5.ToMaybe().Where(null);
             });
@@ -75,7 +77,7 @@ namespace MonadiCSharp.Tests
                          from j in 2.ToMaybe()
                          select i + j;
 
-            Assert.IsAssignableFrom<IMaybe<int>>(result);
+            IsAssignableFrom<IMaybe<int>>(result);
         }
         
         [Fact]
@@ -85,7 +87,7 @@ namespace MonadiCSharp.Tests
 
             var result = nestedMaybe.SelectMany(x => x);
 
-            Assert.IsAssignableFrom<IMaybe<int>>(result);
+            IsAssignableFrom<IMaybe<int>>(result);
         }
         
         [Property(Arbitrary = new [] {typeof(MaybeArbitrary)})]
@@ -113,7 +115,7 @@ namespace MonadiCSharp.Tests
         [Fact]
         public void SelectManyBindThrowsWhenSelectorIsNull()
         {
-            Assert.Throws<ArgumentNullException>(() =>
+            Throws<ArgumentNullException>(() =>
             {
                 1.ToMaybe().ToMaybe().SelectMany<IMaybe<int>, int>(null);
             });
@@ -123,7 +125,7 @@ namespace MonadiCSharp.Tests
         public void SelectManyCombineThrowsWhenInnerSelectorIsNull(
             IMaybe<object> maybe, Func<object ,object, object> resultSelector)   
         {
-            Assert.Throws<ArgumentNullException>(() =>
+            Throws<ArgumentNullException>(() =>
             {
                 maybe.SelectMany<object, object, object>(null, (a, b) => null);
             });
@@ -133,7 +135,7 @@ namespace MonadiCSharp.Tests
         public void SelectManyCombineThrowsWhenResultSelectorIsNull(
             IMaybe<object> maybe,  Func<object, object, object> resultSelector)
         {
-            Assert.Throws<ArgumentNullException>(() =>
+            Throws<ArgumentNullException>(() =>
             {
                 maybe.SelectMany<object, object, object>(v => v.ToMaybe(), null);
             });

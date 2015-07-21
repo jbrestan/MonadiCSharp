@@ -1,32 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FsCheck;
 using FsCheck.Xunit;
 using Xunit;
 using MonadiCSharp.MaybeImplementation;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MonadiCSharp.Tests
 {
+    using static Assert;
+    using static Maybe;
+
     public class MaybeProperties
     {
         [Fact]
         public void ShouldConstructNothingFromNothing()
         {
-            Assert.IsType<Nothing<object>>(Maybe.Nothing<object>());
+            IsType<Nothing<object>>(Nothing<object>());
         }
 
         [Property]
         public bool ShouldBeJustFromNonNull(NonNull<object> o)
         {
-            return Maybe.Just(o.Item) is Just<object>;
+            return Just(o.Item) is Just<object>;
         }
 
         [Fact]
         public void ShouldThrowWhenJustCalledWithNull()
         {
-            Assert.Throws<ArgumentNullException>(() => Maybe.Just<object>(null));
+            Throws<ArgumentNullException>(() => Just<object>(null));
         }
 
         [Fact]
@@ -34,13 +37,13 @@ namespace MonadiCSharp.Tests
         public void NothingShouldBeMatchedByOtherwise()
         {
             object o = null;
-            Assert.True(o.ToMaybe().Match(_ => false, () => true));
+            True(o.ToMaybe().Match(_ => false, () => true));
         }
         
         [Fact]
         public void NothingIsEqualToNothing()
         {
-            Assert.True(Maybe.Nothing<object>().Equals(Maybe.Nothing<object>()));
+            True(Nothing<object>().Equals(Nothing<object>()));
         }
 
         [Property]
@@ -58,13 +61,13 @@ namespace MonadiCSharp.Tests
         [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
         public bool JustIsNotEqualToNothing(IMaybe<object> just)
         {
-            return !just.Equals(Maybe.Nothing<object>());
+            return !just.Equals(Nothing<object>());
         }
 
         [Fact]
         public void NothingIsEqualToNothingAsObject()
         {
-            Assert.True(Maybe.Nothing<object>().Equals(Maybe.Nothing<object>() as object));
+            True(Nothing<object>().Equals(Nothing<object>() as object));
         }
 
         [Property]
@@ -76,13 +79,13 @@ namespace MonadiCSharp.Tests
         [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
         public bool JustIsNotEqualToNothingAsObject(IMaybe<object> just)
         {
-            return !just.Equals(Maybe.Nothing<object>() as object);
+            return !just.Equals(Nothing<object>() as object);
         }
 
         [Fact]
         public void NothingGetHashCodeReturnsZero()
         {
-            Assert.Equal(0, Maybe.Nothing<int>().GetHashCode());
+            Equal(0, Nothing<int>().GetHashCode());
         }
 
         [Property]
@@ -94,13 +97,13 @@ namespace MonadiCSharp.Tests
         [Fact]
         public void MaybeImplementsIEnumerable()
         {
-            Assert.IsAssignableFrom<IEnumerable<object>>(Maybe.Nothing<object>());
+            IsAssignableFrom<IEnumerable<object>>(Nothing<object>());
         }
 
         [Fact]
         public void NothingBehavesLikeEmptyCollection()
         {
-            Assert.Equal(Enumerable.Empty<object>(), Maybe.Nothing<object>());
+            Equal(Enumerable.Empty<object>(), Nothing<object>());
         }
 
         [Property]

@@ -2,11 +2,14 @@
 using System.Diagnostics.CodeAnalysis;
 using FsCheck;
 using FsCheck.Xunit;
-using MonadiCSharp.MaybeImplementation;
 using Xunit;
+using MonadiCSharp.MaybeImplementation;
 
 namespace MonadiCSharp.Tests
 {
+    using static Assert;
+    using static Maybe;
+
     public class MaybeExtensionsProperties
     {
         [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
@@ -14,7 +17,7 @@ namespace MonadiCSharp.Tests
         {
             var wasCalled = false;
             Func<object, IMaybe<object>> f =
-                wrapped => { wasCalled = true; return Maybe.Just(wrapped); };
+                wrapped => { wasCalled = true; return Just(wrapped); };
             just.Bind(f);
             return wasCalled;
         }
@@ -24,16 +27,16 @@ namespace MonadiCSharp.Tests
         {
             var usesTheSameObject = false;
             Func<object, IMaybe<object>> f =
-                wrapped => { usesTheSameObject = o.Item == wrapped; return Maybe.Just(wrapped); };
-            Maybe.Just(o.Item).Bind(f);
+                wrapped => { usesTheSameObject = o.Item == wrapped; return Just(wrapped); };
+            Just(o.Item).Bind(f);
             return usesTheSameObject;
         }
 
         [Property]
         public void NothingShouldBindToNothing(Func<object, IMaybe<object>> f)
         {
-            var nothing = Maybe.Nothing<object>();
-            Assert.IsType<Nothing<object>>(nothing.Bind(f));
+            var nothing = Nothing<object>();
+            IsType<Nothing<object>>(nothing.Bind(f));
         }
 
         [Property]
@@ -47,13 +50,13 @@ namespace MonadiCSharp.Tests
         public void ToMaybeReturnsNothingWhenSuppliedWithNull()
         {
             object o = null;
-            Assert.IsType<Nothing<object>>(o.ToMaybe());
+            IsType<Nothing<object>>(o.ToMaybe());
         }
         [Fact]
         public void UnwrapNothingShouldReturnNothing()
         {
-            var doubleMaybe = Maybe.Nothing<IMaybe<object>>();
-            Assert.Equal(doubleMaybe.Unwrap(), Maybe.Nothing<object>());
+            var doubleMaybe = Nothing<IMaybe<object>>();
+            Equal(doubleMaybe.Unwrap(), Nothing<object>());
         }
 
         [Property(Arbitrary = new[] { typeof(JustArbitrary) })]
@@ -66,7 +69,7 @@ namespace MonadiCSharp.Tests
         [Fact]
         public void NothingGetValueOrDefaultReturnsDefaultTypeValue()
         {
-            Assert.Equal(null, Maybe.Nothing<object>().GetValueOrDefault());
+            Equal(null, Nothing<object>().GetValueOrDefault());
         }
 
         [Property]
@@ -79,7 +82,7 @@ namespace MonadiCSharp.Tests
         public void NothingGetValueOrDefaultWithSuppliedValueReturnsTheSuppliedValue()
         {
             var expected = new object();
-            Assert.Equal(expected, Maybe.Nothing<object>().GetValueOrDefault(expected));
+            Equal(expected, Nothing<object>().GetValueOrDefault(expected));
         }
 
         [Property]
