@@ -6,35 +6,21 @@ namespace MonadiCSharp.MaybeImplementation
 {
     internal sealed class Nothing<TValue> : IMaybe<TValue>, IEquatable<Nothing<TValue>>
     {
-        internal static readonly Nothing<TValue> Value = new Nothing<TValue>();
+        internal static Nothing<TValue> Value { get; } = new Nothing<TValue>();
 
         private Nothing() { }
 
-        public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise)
-        {
-            return Ensure.NotNull(() => otherwise).Invoke();
-        }
+        public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise) =>
+            Ensure.NotNull(() => otherwise).Invoke();
 
         #region Equality members and IEquatable implementation...
-        public bool Equals(Nothing<TValue> other)
-        {
-            return true;
-        }
+        public bool Equals(Nothing<TValue> other) => true;
 
-        public bool Equals(IMaybe<TValue> other)
-        {
-            return ReferenceEquals(this, other);
-        }
+        public bool Equals(IMaybe<TValue> other) => other is Nothing<TValue>;
 
-        public override bool Equals(object obj)
-        {
-            return ReferenceEquals(this, obj);
-        }
+        public override bool Equals(object obj) => obj is Nothing<TValue>;
 
-        public override int GetHashCode()
-        {
-            return 0;
-        }
+        public override int GetHashCode() => 0;
         #endregion
 
         #region IEnumerable implementation...
@@ -43,10 +29,7 @@ namespace MonadiCSharp.MaybeImplementation
             yield break;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
     }
 }

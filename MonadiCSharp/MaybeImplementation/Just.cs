@@ -13,31 +13,21 @@ namespace MonadiCSharp.MaybeImplementation
             this.value = Ensure.NotNull(() => value);
         }
 
-        public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise)
-        {
-            return Ensure.NotNull(() => onValue).Invoke(value);
-        }
+        public TResult Match<TResult>(Func<TValue, TResult> onValue, Func<TResult> otherwise) =>
+            Ensure.NotNull(() => onValue).Invoke(value);
+        
 
         #region Equality members and IEquatable implementation...
-        public bool Equals(Just<TValue> other)
-        {
-            return other != null && value.Equals(other.value);
-        }
+        public bool Equals(Just<TValue> other) =>
+            other != null && value.Equals(other.value);
 
-        public bool Equals(IMaybe<TValue> other)
-        {
-            return Equals(other as Just<TValue>);
-        }
+        public bool Equals(IMaybe<TValue> other) =>
+            Equals(other as Just<TValue>);
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Just<TValue>);
-        }
+        public override bool Equals(object obj) =>
+            Equals(obj as Just<TValue>);
 
-        public override int GetHashCode()
-        {
-            return value.GetHashCode();
-        }
+        public override int GetHashCode() => value.GetHashCode();
         #endregion
 
         #region IEnumerable implementation...
@@ -46,10 +36,7 @@ namespace MonadiCSharp.MaybeImplementation
             yield return value;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
     }
 }

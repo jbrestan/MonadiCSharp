@@ -5,10 +5,7 @@ namespace MonadiCSharp.Tests
 {
     internal class MaybeArbitrary : Arbitrary<IMaybe<object>>
     {
-        public static Arbitrary<IMaybe<object>> Maybe()
-        {
-            return new MaybeArbitrary();
-        }
+        public static Arbitrary<IMaybe<object>> Maybe() => new MaybeArbitrary();
 
         public override Gen<IMaybe<object>> Generator
         {
