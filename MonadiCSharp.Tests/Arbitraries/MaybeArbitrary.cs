@@ -1,7 +1,7 @@
 ﻿using FsCheck;
 using FsCheck.Fluent;
 
-namespace MonadiCSharp.Tests
+namespace MonadiCSharp.Tests.Arbitraries
 {
     internal class MaybeArbitrary : Arbitrary<IMaybe<object>>
     {

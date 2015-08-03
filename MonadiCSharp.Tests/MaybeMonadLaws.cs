@@ -4,6 +4,8 @@ using FsCheck.Xunit;
 
 namespace MonadiCSharp.Tests
 {
+    using Arbitraries;
+
     public class MaybeMonadLaws
     {
         [Property(Arbitrary = new [] {typeof(MaybeArbitrary)})]

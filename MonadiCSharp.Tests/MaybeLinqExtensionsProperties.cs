@@ -4,6 +4,7 @@ using Xunit;
 
 namespace MonadiCSharp.Tests
 {
+    using Arbitraries;
     using static Assert;
     using static Maybe;
 

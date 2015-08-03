@@ -36,7 +36,11 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Either.cs" />
+    <Compile Include="EitherImplementation\Left.cs" />
+    <Compile Include="EitherImplementation\Right.cs" />
     <Compile Include="Ensure.cs" />
+    <Compile Include="IEither.cs" />
     <Compile Include="IMaybe.cs" />
     <Compile Include="Maybe.cs" />
     <Compile Include="MaybeExtensions.cs" />
