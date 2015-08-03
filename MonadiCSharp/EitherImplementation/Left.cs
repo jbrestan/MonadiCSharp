@@ -42,5 +42,7 @@ namespace MonadiCSharp.EitherImplementation
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
+
+        public override string ToString() => $"Left [{value}]";
     }
 }
